@@ -1,6 +1,7 @@
 import linebot from 'linebot'
 import dotenv from 'dotenv'
 import axios from 'axios'
+import scheduld from 'node-scheduld'
 
 dotenv.config()
 
@@ -10,13 +11,25 @@ const bot = linebot({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 })
 
+let exhubitions = []
+
+const updateData = async () => {
+  const response = await axios.get('https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=6')
+  exhubitions = response.data
+}
+
+scheduld.scheduldJob('* * 0 * * *', () => {
+  updateData()
+})
+
+updateData()
+
 bot.on('message', async event => {
   try {
-    const response = await axios.get('https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=6')
     const text = event.message.text
     let reply = ''
 
-    for (const data of response.data) {
+    for (const data of exhubitions) {
       if (data.title === text) {
         reply = data.showInfo[0].locationName
         break
