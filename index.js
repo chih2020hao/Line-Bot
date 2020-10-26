@@ -33,7 +33,7 @@ bot.on('message', async event => {
     let reply = ''
     const address = location.address.slice(0, 3)
 
-    if (address == 243) {
+    if (address === 243) {
       reply = 'boom!'
     }
     // for (const data of dataTaipei) {
