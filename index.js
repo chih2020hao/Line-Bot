@@ -29,8 +29,13 @@ updateData()
 
 bot.on('message', async event => {
   try {
-    const text = event.message.text
-    let reply = text
+    const location = event.message.location
+    let reply = ''
+    const address = location.address.slice(0, 3)
+
+    if (address == 243) {
+      reply = 'boom!'
+    }
     // for (const data of dataTaipei) {
     //   if (data.title === text) {
     //     reply = data.showInfo[0].locationName
