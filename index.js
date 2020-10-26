@@ -12,20 +12,20 @@ const bot = linebot({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 })
 
-let dataTaipei = []
-let dataNewTaipei = []
+// let dataTaipei = []
+// let dataNewTaipei = []
 
-const updateData = async () => {
-  const res1 = await axios.get('https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json')
-  const res2 = await axios.get('https://data.ntpc.gov.tw/api/datasets/71CD1490-A2DF-4198-BEF1-318479775E8A/csv/file')
-  dataTaipei = res1.data
-  dataNewTaipei = await csv().fromString(res2.data)
-}
+// const updateData = async () => {
+//   const res1 = await axios.get('https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json')
+//   const res2 = await axios.get('https://data.ntpc.gov.tw/api/datasets/71CD1490-A2DF-4198-BEF1-318479775E8A/csv/file')
+//   dataTaipei = res1.data
+//   dataNewTaipei = await csv().fromString(res2.data)
+// }
 
-scheduld.scheduldJob('* 30 * * * *', () => {
-  updateData()
-})
-updateData()
+// scheduld.scheduldJob('* 30 * * * *', () => {
+//   updateData()
+// })
+// updateData()
 
 bot.on('message', async event => {
   try {
